@@ -251,7 +251,7 @@ export function BlacklistApp() {
   {/* Header Section */}
   <div className="container mx-auto py-4 px-2 sm:py-6 sm:px-4 md:py-8 md:px-6 lg:py-10 lg:px-8">
   <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 md:mb-8 text-center">Blacklist Data Pooling System</h1>
-    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
       <span className="text-sm sm:text-base text-muted-foreground">
         Signed in as: {user?.email}
       </span>
