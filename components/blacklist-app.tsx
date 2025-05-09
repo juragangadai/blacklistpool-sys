@@ -248,29 +248,41 @@ export function BlacklistApp() {
 
   return (
 <div className="container max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  {/* Header Section */}
   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
     <h1 className="text-2xl sm:text-3xl font-bold">Blacklist Data Pooling System</h1>
     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-      <span className="text-sm sm:text-base text-muted-foreground">Signed in as: {user?.email}</span>
-      <Button variant="outline" size="sm" onClick={handleSignOut} className="w-full sm:w-auto">
+      <span className="text-sm sm:text-base text-muted-foreground">
+        Signed in as: {user?.email}
+      </span>
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={handleSignOut}
+        className="w-full sm:w-auto"
+      >
         <LogOut className="h-4 w-4 mr-2" />
         Sign Out
       </Button>
     </div>
   </div>
 
-  <Tabs defaultValue="manual" className="w-full mb-8">
-    <TabsList className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+  {/* Tabs Section */}
+  <Tabs defaultValue="manual" className="w-full">
+    <TabsList className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-6">
       <TabsTrigger value="manual">Manual Input</TabsTrigger>
       <TabsTrigger value="csv">CSV Upload</TabsTrigger>
       <TabsTrigger value="all-data">All Data</TabsTrigger>
     </TabsList>
 
-    <TabsContent value="manual">
+    {/* Manual Input */}
+    <TabsContent value="manual" className="mt-6">
       <Card>
         <CardHeader>
           <CardTitle>Add Blacklist Entry</CardTitle>
-          <CardDescription>Enter NIK (ID Card number) and leasing name to add to the blacklist.</CardDescription>
+          <CardDescription>
+            Enter NIK (ID Card number) and leasing name to add to the blacklist.
+          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
@@ -310,11 +322,14 @@ export function BlacklistApp() {
       </Card>
     </TabsContent>
 
-    <TabsContent value="csv">
+    {/* CSV Upload */}
+    <TabsContent value="csv" className="mt-6">
       <Card>
         <CardHeader>
           <CardTitle>Upload CSV File</CardTitle>
-          <CardDescription>Upload a CSV file with NIK and leasing name columns.</CardDescription>
+          <CardDescription>
+            Upload a CSV file with NIK and leasing name columns.
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {csvError && (
@@ -334,9 +349,17 @@ export function BlacklistApp() {
                 <div className="text-sm text-muted-foreground">
                   <span className="font-semibold">Click to upload</span> or drag and drop
                 </div>
-                <div className="text-xs text-muted-foreground mt-1">CSV format: NIK,LeasingName</div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  CSV format: NIK,LeasingName
+                </div>
               </Label>
-              <Input id="csvFile" type="file" accept=".csv" className="hidden" onChange={handleCsvUpload} />
+              <Input
+                id="csvFile"
+                type="file"
+                accept=".csv"
+                className="hidden"
+                onChange={handleCsvUpload}
+              />
             </div>
           </div>
           <div className="flex justify-center mt-4">
@@ -349,7 +372,8 @@ export function BlacklistApp() {
       </Card>
     </TabsContent>
 
-    <TabsContent value="all-data">
+    {/* All Data View */}
+    <TabsContent value="all-data" className="mt-6">
       <Card>
         <CardHeader>
           <CardTitle>All Blacklist Data</CardTitle>
@@ -400,7 +424,12 @@ export function BlacklistApp() {
                   <span className="font-medium">{totalCount}</span> entries
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Button variant="outline" size="sm" onClick={goToPrevPage} disabled={currentPage === 1}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={goToPrevPage}
+                    disabled={currentPage === 1}
+                  >
                     <ChevronLeft className="h-4 w-4" />
                     <span className="sr-only">Previous Page</span>
                   </Button>
@@ -408,7 +437,12 @@ export function BlacklistApp() {
                     Page <span className="font-medium">{currentPage}</span> of{" "}
                     <span className="font-medium">{totalPages || 1}</span>
                   </div>
-                  <Button variant="outline" size="sm" onClick={goToNextPage} disabled={currentPage >= totalPages}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={goToNextPage}
+                    disabled={currentPage >= totalPages}
+                  >
                     <ChevronRight className="h-4 w-4" />
                     <span className="sr-only">Next Page</span>
                   </Button>
@@ -425,6 +459,7 @@ export function BlacklistApp() {
     </TabsContent>
   </Tabs>
 </div>
+
 
   )
 }
