@@ -247,182 +247,184 @@ export function BlacklistApp() {
   }
 
   return (
-    <div className="container mx-auto py-10 px-4">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Blacklist Data Pooling System</h1>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground mr-2">Signed in as: {user?.email}</span>
-          <Button variant="outline" size="sm" onClick={handleSignOut}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Sign Out
-          </Button>
-        </div>
-      </div>
+<div className="container max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+    <h1 className="text-2xl sm:text-3xl font-bold">Blacklist Data Pooling System</h1>
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+      <span className="text-sm sm:text-base text-muted-foreground">Signed in as: {user?.email}</span>
+      <Button variant="outline" size="sm" onClick={handleSignOut} className="w-full sm:w-auto">
+        <LogOut className="h-4 w-4 mr-2" />
+        Sign Out
+      </Button>
+    </div>
+  </div>
 
-      <Tabs defaultValue="manual" className="max-w-5xl mx-auto mb-8">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="manual">Manual Input</TabsTrigger>
-          <TabsTrigger value="csv">CSV Upload</TabsTrigger>
-          <TabsTrigger value="all-data">All Data</TabsTrigger>
-        </TabsList>
+  <Tabs defaultValue="manual" className="w-full mb-8">
+    <TabsList className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+      <TabsTrigger value="manual">Manual Input</TabsTrigger>
+      <TabsTrigger value="csv">CSV Upload</TabsTrigger>
+      <TabsTrigger value="all-data">All Data</TabsTrigger>
+    </TabsList>
 
-        <TabsContent value="manual">
-          <Card>
-            <CardHeader>
-              <CardTitle>Add Blacklist Entry</CardTitle>
-              <CardDescription>Enter NIK (ID Card number) and leasing name to add to the blacklist.</CardDescription>
-            </CardHeader>
-            <form onSubmit={handleSubmit}>
-              <CardContent className="space-y-4">
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-                <div className="space-y-2">
-                  <Label htmlFor="nik">NIK (ID Card Number)</Label>
-                  <Input
-                    id="nik"
-                    value={nik}
-                    onChange={(e) => setNik(e.target.value)}
-                    placeholder="Enter 16-digit NIK"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="leasingName">Leasing Name</Label>
-                  <Input
-                    id="leasingName"
-                    value={leasingName}
-                    onChange={(e) => setLeasingName(e.target.value)}
-                    placeholder="Enter leasing name"
-                  />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button type="submit" className="w-full">
-                  Add to Blacklist
-                </Button>
-              </CardFooter>
-            </form>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="csv">
-          <Card>
-            <CardHeader>
-              <CardTitle>Upload CSV File</CardTitle>
-              <CardDescription>Upload a CSV file with NIK and leasing name columns.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {csvError && (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{csvError}</AlertDescription>
-                </Alert>
-              )}
+    <TabsContent value="manual">
+      <Card>
+        <CardHeader>
+          <CardTitle>Add Blacklist Entry</CardTitle>
+          <CardDescription>Enter NIK (ID Card number) and leasing name to add to the blacklist.</CardDescription>
+        </CardHeader>
+        <form onSubmit={handleSubmit}>
+          <CardContent className="space-y-4">
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="csvFile">CSV File</Label>
-                <div className="grid w-full items-center gap-1.5">
-                  <Label
-                    htmlFor="csvFile"
-                    className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-input bg-background px-4 py-5 text-center"
-                  >
-                    <Upload className="h-8 w-8 mb-2 text-muted-foreground" />
-                    <div className="text-sm text-muted-foreground">
-                      <span className="font-semibold">Click to upload</span> or drag and drop
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">CSV format: NIK,LeasingName</div>
-                  </Label>
-                  <Input id="csvFile" type="file" accept=".csv" className="hidden" onChange={handleCsvUpload} />
-                </div>
-              </div>
-              <div className="flex justify-center mt-4">
-                <Button variant="outline" onClick={downloadCsvTemplate}>
-                  <Download className="h-4 w-4 mr-2" />
-                  Download CSV Template
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="all-data">
-          <Card>
-            <CardHeader>
-              <CardTitle>All Blacklist Data</CardTitle>
-              <CardDescription>View and search all blacklist entries.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Label htmlFor="nik">NIK (ID Card Number)</Label>
                 <Input
-                  type="search"
-                  placeholder="Search by NIK or leasing name..."
-                  className="pl-8"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
+                  id="nik"
+                  value={nik}
+                  onChange={(e) => setNik(e.target.value)}
+                  placeholder="Enter 16-digit NIK"
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="leasingName">Leasing Name</Label>
+                <Input
+                  id="leasingName"
+                  value={leasingName}
+                  onChange={(e) => setLeasingName(e.target.value)}
+                  placeholder="Enter leasing name"
+                />
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button type="submit" className="w-full sm:w-auto sm:ml-auto">
+              Add to Blacklist
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+    </TabsContent>
 
-              {isLoading ? (
-                <div className="text-center py-10">Loading data...</div>
-              ) : allEntries.length > 0 ? (
-                <div className="border rounded-md">
-                  <div className="max-h-[500px] overflow-y-auto scrollbar-thin">
-                    <Table>
-                      <TableHeader className="sticky top-0 bg-background z-10">
-                        <TableRow>
-                          <TableHead>No.</TableHead>
-                          <TableHead>NIK (ID Card Number)</TableHead>
-                          <TableHead>Leasing Name</TableHead>
-                          <TableHead>Date Added</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {allEntries.map((entry, index) => (
-                          <TableRow key={entry.id}>
-                            <TableCell>{(currentPage - 1) * ENTRIES_PER_PAGE + index + 1}</TableCell>
-                            <TableCell>{entry.nik}</TableCell>
-                            <TableCell>{entry.leasing_name}</TableCell>
-                            <TableCell>{new Date(entry.created_at).toLocaleString()}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
+    <TabsContent value="csv">
+      <Card>
+        <CardHeader>
+          <CardTitle>Upload CSV File</CardTitle>
+          <CardDescription>Upload a CSV file with NIK and leasing name columns.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {csvError && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{csvError}</AlertDescription>
+            </Alert>
+          )}
+          <div className="space-y-2">
+            <Label htmlFor="csvFile">CSV File</Label>
+            <div className="grid w-full items-center gap-1.5">
+              <Label
+                htmlFor="csvFile"
+                className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-input bg-background px-4 py-5 text-center"
+              >
+                <Upload className="h-8 w-8 mb-2 text-muted-foreground" />
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-semibold">Click to upload</span> or drag and drop
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">CSV format: NIK,LeasingName</div>
+              </Label>
+              <Input id="csvFile" type="file" accept=".csv" className="hidden" onChange={handleCsvUpload} />
+            </div>
+          </div>
+          <div className="flex justify-center mt-4">
+            <Button variant="outline" onClick={downloadCsvTemplate}>
+              <Download className="h-4 w-4 mr-2" />
+              Download CSV Template
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </TabsContent>
 
-                  {/* Pagination controls */}
-                  <div className="flex items-center justify-between px-4 py-3 border-t">
-                    <div className="text-sm text-muted-foreground">
-                      Showing <span className="font-medium">{allEntries.length}</span> of{" "}
-                      <span className="font-medium">{totalCount}</span> entries
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm" onClick={goToPrevPage} disabled={currentPage === 1}>
-                        <ChevronLeft className="h-4 w-4" />
-                        <span className="sr-only">Previous Page</span>
-                      </Button>
-                      <div className="text-sm">
-                        Page <span className="font-medium">{currentPage}</span> of{" "}
-                        <span className="font-medium">{totalPages || 1}</span>
-                      </div>
-                      <Button variant="outline" size="sm" onClick={goToNextPage} disabled={currentPage >= totalPages}>
-                        <ChevronRight className="h-4 w-4" />
-                        <span className="sr-only">Next Page</span>
-                      </Button>
-                    </div>
+    <TabsContent value="all-data">
+      <Card>
+        <CardHeader>
+          <CardTitle>All Blacklist Data</CardTitle>
+          <CardDescription>View and search all blacklist entries.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search by NIK or leasing name..."
+              className="pl-8"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </div>
+
+          {isLoading ? (
+            <div className="text-center py-10">Loading data...</div>
+          ) : allEntries.length > 0 ? (
+            <div className="border rounded-md overflow-x-auto">
+              <div className="max-h-[500px] overflow-y-auto scrollbar-thin">
+                <Table className="min-w-[600px]">
+                  <TableHeader className="sticky top-0 bg-background z-10">
+                    <TableRow>
+                      <TableHead>No.</TableHead>
+                      <TableHead>NIK (ID Card Number)</TableHead>
+                      <TableHead>Leasing Name</TableHead>
+                      <TableHead>Date Added</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {allEntries.map((entry, index) => (
+                      <TableRow key={entry.id}>
+                        <TableCell>{(currentPage - 1) * ENTRIES_PER_PAGE + index + 1}</TableCell>
+                        <TableCell>{entry.nik}</TableCell>
+                        <TableCell>{entry.leasing_name}</TableCell>
+                        <TableCell>{new Date(entry.created_at).toLocaleString()}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-between px-4 py-3 border-t gap-2 sm:gap-0">
+                <div className="text-sm text-muted-foreground">
+                  Showing <span className="font-medium">{allEntries.length}</span> of{" "}
+                  <span className="font-medium">{totalCount}</span> entries
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button variant="outline" size="sm" onClick={goToPrevPage} disabled={currentPage === 1}>
+                    <ChevronLeft className="h-4 w-4" />
+                    <span className="sr-only">Previous Page</span>
+                  </Button>
+                  <div className="text-sm">
+                    Page <span className="font-medium">{currentPage}</span> of{" "}
+                    <span className="font-medium">{totalPages || 1}</span>
                   </div>
+                  <Button variant="outline" size="sm" onClick={goToNextPage} disabled={currentPage >= totalPages}>
+                    <ChevronRight className="h-4 w-4" />
+                    <span className="sr-only">Next Page</span>
+                  </Button>
                 </div>
-              ) : (
-                <div className="text-center py-10 text-muted-foreground">
-                  {searchQuery ? "No matching entries found." : "No blacklist entries yet."}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-10 text-muted-foreground">
+              {searchQuery ? "No matching entries found." : "No blacklist entries yet."}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </TabsContent>
+  </Tabs>
+</div>
+
   )
 }
